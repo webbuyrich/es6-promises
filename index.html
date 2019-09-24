@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <mimeMap fileExtension=".json" mimeType="application/json" />
     <title>Fetch API Testing</title>
 </head>
 <body>
     <button id="getText">Get Text</button>
+    <button id="getUsers">Get Users</button>
     <div id="output"></div>
     <script>
+        // Get Text EventListener
         document.getElementById('getText').addEventListener('click', getText);
-
+        // Get Users EventListener
+        document.getElementById('getUsers').addEventListener('click', getUsers);
+        
+        // get text function
         function getText(){
 
             // 1. Default syntax to return data using fetch
@@ -31,6 +37,24 @@
                     document.getElementById('output').innerHTML = data;
                 })
                 .catch((err) => console.log(err));
+        }
+
+        function getUsers(){
+            fetch('users.json')
+                .then((res) => res.json())
+                .then((data) => {
+                    let output = '<h2>Users</h2>';
+                    data.forEach(function(user){
+                        return output +=`
+                            <ul>
+                                <li>ID: ${user.id}</li>
+                                <li>NAME: ${user.name}</li>
+                                <li>EMAIL: ${user.email}</li>    
+                            </ul>
+                        `;
+                    });
+                    document.getElementById('output').innerHTML = output;
+                })
         }
 
     </script>
