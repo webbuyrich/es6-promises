@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <mimeMap fileExtension=".json" mimeType="application/json" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <source src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript">
     <title>Fetch API Testing</title>
 </head>
 <body>
-    <button id="getText">Get Text</button>
-    <button id="getUsers">Get Users</button>
-    <div id="output"></div>
+    <button class="btn btn-primary" id="getText">Get Text</button>
+    <button class="btn btn-primary" id="getUsers">Get JSON</button>
+    <button class="btn btn-primary" id="getPosts">Get API DATA</button>
+    <div class="col-lg-6" id="output"></div>
     <script>
         // Get Text EventListener
         document.getElementById('getText').addEventListener('click', getText);
         // Get Users EventListener
         document.getElementById('getUsers').addEventListener('click', getUsers);
+        // Get Users EventListener
+        document.getElementById('getPosts').addEventListener('click', getPosts);
         
         // get text function
         function getText(){
@@ -43,16 +48,28 @@
             fetch('users.json')
                 .then((res) => res.json())
                 .then((data) => {
-                    let output = '<h2>Users</h2>';
+                    let output = `
+                    <h2>Users</h2>
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                        </tr>
+                        </thead >
+                        <tbody>`;
                     data.forEach(function(user){
-                        return output +=`
-                            <ul>
-                                <li>ID: ${user.id}</li>
-                                <li>NAME: ${user.name}</li>
-                                <li>EMAIL: ${user.email}</li>    
-                            </ul>
+                        output +=`
+                            <tr>
+                                <th scope="row">${user.id}</th>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                
+                            </tr>                            
                         `;
                     });
+                    output +=`</tbody></table>`;
                     document.getElementById('output').innerHTML = output;
                 })
         }
