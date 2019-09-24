@@ -12,15 +12,22 @@
         document.getElementById('getText').addEventListener('click', getText);
 
         function getText(){
-            fetch('sample.txt')
-            .then(function(res){
-                return res.text();
-            })
-            .then(function(data){
-                console.log(data);
-            })
 
+            // 1. Default syntax to return data using fetch
+            // fetch('sample.txt')
+            // .then(function(res){
+            //     return res.text();
+            // })
+            // .then(function(data){
+            //     console.log(data);
+            // });
+            
+            // 2. Shorter function notation way to return data using fetch
+            fetch('sample.txt')
+                .then( (res) => res.text() )
+                .then( (data) => console.log(data) );
         }
+
     </script>
 </body>
 </html>
